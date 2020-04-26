@@ -1,141 +1,185 @@
-#include <stdio.h>
+#include "Son.h"
 #include "Queue.h"
+#include <stdlib.h>
+#include <stdio.h>
 #include <iostream>
 
 using namespace std;
 
-Unit* Queue::get_last()
+template <class tmpl>
+void workWithClass(tmpl* queue) // шаблон класса для работы c разными наследниками в основной функции, передаём указатель на класс
 {
-    return last;
-}
+    int choise; // номер выбранной пользователем очереди
+    int number = 0; // Номер обрабатываемой очереди
+    int count = 1; // Количество очередей с которыми работает пользователь
+    int value; // введенное значение
+    int Menu; // выбранный пункт меню
+    int flag = 1; // признак работы программы
 
-bool Queue::check()
-{
-    if (size == 0)
+    do
     {
-        cout << "Очередь пуста" << endl;
-        system("pause");
-        return false;
-    }
+        system("cls");
+        cout << "Используется очередь № " << number << endl;
+        cout << "'1' - Добавление элемента очереди" << endl;
+        cout << "'2' - Извлечение элемента из очереди" << endl;
+        cout << "'3' - Вывод очереди на экран" << endl;
+        cout << "'4' - Нахождение минимального элемента" << endl;
+        cout << "'5' - Создание копии очереди" << endl;
+        cout << "'6' - Слияние оригинальной очереди с копией и вывод результата на экран" << endl;
+        cout << "'7' - Выбор другой очереди" << endl;
+        cout << "'8' - Выход" << endl;
+        cin >> Menu;
+        system("cls");
 
-    return true;
-}
-
-Queue::Queue()
-{
-    size = 0;
-};
-
-Queue:: ~Queue()
-{
-    while (size > 0)
-    {
-        Unit* buf = last;
-        last = buf->prev;
-        delete buf;
-        size--;
-    };
-}
-
-void Queue::push(int data)
-{
-    Unit* buff = new Unit;
-    buff->prev = last;
-    last = buff;
-    last->value = data;
-    size++;
-}
-
-int Queue::pop(void)
-{
-    int now_ex = 0;
-    Unit* buf = last;
-    if (buf->prev == nullptr) // если в очереди 1 элемент
-    {
-        now_ex = buf->value;
-        delete last;
-        last = nullptr;
-        size--;
-    }
-    else
-    {
-        while (buf->prev->prev != nullptr) // пока не дойдем до второго в очереди
+        switch (Menu)
         {
-            buf = (buf->prev);
+        case 1:
+            cout << "Введите значение: ";
+            cin >> value;
+            system("cls");
+            queue[number].push(value); // внесение значения в очередь
+            cout << "Элемент " << value << " добавлен" << endl;
+            cout << "Текущая очередь № " << number << " состоит из:" << endl;
+            queue[number].out(); // вывод на экран выбранной очереди
+            system("pause");
+            break;
+
+        case 2:
+            if (!queue[number].check()) break; // проверка очереди
+            cout << "Очередь до извлечения:" << endl;
+            queue[number].out(); // вывод на экран выбранной очереди
+            value = queue[number].pop(); // извлечение из выбранной очереди
+            cout << "Извлечён элемент:" << value << endl;
+            cout << "Очередь после извлечения:" << endl;
+            queue[number].out(); // вывод на экран выбранной очереди
+            system("pause");
+            break;
+
+        case 3:
+            if (!queue[number].check()) break;
+            cout << "Очередь № " << number << " состоит из:" << endl;
+            queue[number].out(); // вывод на экран выбранной очереди
+            system("pause");
+            break;
+
+        case 4:
+            if (!queue[number].check()) break;
+            cout << "Текущая очередь:" << endl;
+            queue[number].out(); // вывод на экран выбранной очереди
+            cout << "Минимальный элемент: " << queue[number].min_unit_finder() << endl; // Задание 4
+            system("pause");
+            break;
+
+        case 5:
+            if (!queue[number].check()) break;
+            queue[count].copy(queue[number]); // копирование выбранной очереди
+            cout << "Очередь скопирована. Номер очереди: " << count++ << endl;
+            system("pause");
+            break;
+
+        case 6:
+            if (count == 1)
+            {
+                cout << "Существует только одна очередь" << endl;
+                system("pause");
+                break;
+            }
+
+            cout << "Вы находитесь в очереди № " << number << endl;
+            cout << "Введите номер очереди (от 0 до " << count - 1 << ", кроме " << number << ", так как она сейчас используется), c которой будет произведено слияние: ";
+            cin >> choise;
+            system("cls");
+
+            if ((choise < 0) || (choise == number) || (choise >= count))
+            {
+                cout << "Некорректное значение. Объединение не произведено" << endl;
+                system("pause");
+                break;
+            }
+
+            queue[count].merger(queue[number], queue[choise]);
+            cout << "Объединение произведено. Номер очереди результата: " << count << endl;
+            count++;
+            system("pause");
+            break;
+
+        case 7:
+            if (count == 1)
+            {
+                cout << "Существует только одна очередь" << endl;
+                system("pause");
+                break;
+            }
+
+            cout << "Вы находитесь в очереди № " << number << endl;
+            cout << "Введите номер очереди (от 0 до " << count - 1 << ", кроме " << number << ", так как она сейчас используется), на которую следует переключиться: ";
+            cin >> choise;
+            system("cls");
+            if ((choise < 0) || (choise == number) || (choise >= count))
+            {
+                cout << "Некорректное значение. Переключение не выполнено" << endl;
+            }
+            else
+            {
+                number = choise;
+                cout << "Текущая очередь № " << number << ":" << endl;
+                queue[number].out(); // вывод на экран выбранной очереди
+            }
+            system("pause");
+            break;
+
+        case 8:
+            flag = 0;
         }
-        now_ex = buf->prev->value;
-        delete buf->prev;
-        buf->prev = nullptr;
-        size--;
-    }
-    return now_ex;
+    } while (flag == 1);
 }
 
-void Queue::out()
+int main()
 {
-    Unit* buf = last;
+    setlocale(LC_ALL, "Rus");
 
-    while (buf->prev != nullptr) // если это был не последний, то...
+    int Number_Q; // количество очередей
+    int Type_son; // номер типа наследования
+
+    cout << "Введите количество очередей" << endl;
+    cin >> Number_Q;
+    system("cls");
+
+    sub1* Object1 = NULL;
+    sub2* Object2 = NULL;
+    sub3* Object3 = NULL;
+
+    cout << "Выберете тип наследования" << endl;
+    cout << "'1' - Public" << endl;
+    cout << "'2' - Protected" << endl;
+    cout << "'3' - Private" << endl;
+    cin >> Type_son;
+    system("cls");
+
+    switch (Type_son)
     {
-        cout << buf->value << "  ->  ";
-        buf = buf->prev; // берем следующий
-    };
+    case 1:
+        Object1 = new sub1[Number_Q];
+        workWithClass(Object1);
+        delete[] Object1;
+        break;
 
-    cout << buf->value << endl; // вписываем последний
-}
+    case 2:
+        Object2 = new sub2[Number_Q];
+        workWithClass(Object2);
+        delete[] Object2;
+        break;
 
-void Queue::copy(Queue& ob) // передаем текущую очередь
-{
-    int* arr = new int[ob.size]; // создаем указатель на массив равный количеству элементов в очереди
-    Unit* ptr = ob.last;
+    case 3:
+        Object3 = new sub3[Number_Q];
+        workWithClass(Object3);
+        delete[] Object3;
+        break;
 
-    for (int i = ob.size - 1; i >= 0; i--)
-    {
-        arr[i] = ptr->value;
-        ptr = ptr->prev;
+    default:
+        cout << "некорректный ввод";
+        break;
     }
 
-    for (int i = 0; i < ob.size; i++)
-    {
-        this->push(arr[i]); // указатель на обьект на котором вызвана функция
-    }
-
-    delete[] arr;
-    this->out();
-}
-
-void Queue::merger(Queue& ob1, Queue& ob2)
-{
-    int* arr = new int[ob1.size];
-    Unit* ptr1 = ob1.last;
-
-    for (int i = ob1.size - 1; i >= 0; i--)
-    {
-        arr[i] = ptr1->value;
-        ptr1 = ptr1->prev;
-    }
-
-    for (int i = 0; i < ob1.size; i++)
-    {
-        this->push(arr[i]);
-    }
-
-    delete[] arr;
-
-    int* arr2 = new int[ob2.size];
-    Unit* ptr2 = ob2.last;
-
-    for (int i = ob2.size - 1; i >= 0; i--)
-    {
-        arr2[i] = ptr2->value;
-        ptr2 = ptr2->prev;
-    }
-
-    for (int i = 0; i < ob2.size; i++)
-    {
-        push(arr2[i]);
-    }
-
-    delete[] arr2;
-    this->out();
+    return 0;
 }
