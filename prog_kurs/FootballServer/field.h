@@ -6,6 +6,7 @@ class Field
 {
 public:
     Field();
+    void neighbors();
     ~Field();
 
 public:
@@ -14,8 +15,10 @@ private:
     int size_cell=0;
     int x;
     int y;
-    int start_cell;
-    int end_cell;
+    int num_dot;
+    int now_cell_x;
+    int now_cell_y;
+    //int end_cell;
     int arr_cell;
     int size_field=800;//поле 800х800
     struct cell

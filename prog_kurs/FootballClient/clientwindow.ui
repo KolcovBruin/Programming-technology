@@ -30,13 +30,13 @@
      <string>Завершить ход</string>
     </property>
    </widget>
-   <widget class="QWidget" name="widget" native="true">
+   <widget class="QGraphicsView" name="graphicsView">
     <property name="geometry">
      <rect>
-      <x>160</x>
-      <y>90</y>
-      <width>451</width>
-      <height>301</height>
+      <x>150</x>
+      <y>60</y>
+      <width>501</width>
+      <height>411</height>
      </rect>
     </property>
    </widget>

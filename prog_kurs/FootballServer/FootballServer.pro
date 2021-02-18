@@ -1,6 +1,6 @@
 QT -= gui
 QT +=network core
-CONFIG += c++11 console
+CONFIG += c++11 console sdk_no_version_check
 CONFIG -= app_bundle
 
 # You can make your code fail to compile if it uses deprecated APIs.

@@ -8,6 +8,8 @@
 #include <QTcpServer>
 #include <QDataStream>
 #include <QPainter>
+#include "fields.h"
+#include "rectang.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class ClientWindow; }
 QT_END_NAMESPACE
@@ -25,7 +27,9 @@ public:
 public slots:
     void sockReady();
     void sockDisc();
-
+private:
+    Fields *scene;
+    Rectang *rectangle;
 private slots:
     void on_pushButton_clicked();
 

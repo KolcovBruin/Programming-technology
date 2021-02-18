@@ -6,6 +6,14 @@ ClientWindow::ClientWindow(QWidget *parent)
     , ui(new Ui::ClientWindow)
 {
     ui->setupUi(this);
+    scene=new Fields();
+    rectangle =new Rectang();
+   // Fields s;
+
+    ui->graphicsView->setScene(scene);
+    scene->addItem(rectangle);   // Добавляем на сцену треугольник
+      rectangle->setPos(0,0);
+
     socket=new QTcpSocket(this);
     connect(socket,SIGNAL(readyRead()),this,SLOT(sockReady()));
     connect(socket,SIGNAL(disconnected),this,SLOT(sockDisc()));
@@ -51,4 +59,7 @@ void ClientWindow::paintEvent(QPaintEvent *event)
         painter.setBrush(QBrush(Qt::white, Qt::SolidPattern));
           painter.drawLine(0, 0, 200, 200);
     }
+
+
+
 
