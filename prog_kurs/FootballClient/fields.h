@@ -16,7 +16,7 @@ public:
 
       ~Fields();
 private:
- void mousePressEvent(QGraphicsSceneMouseEvent * event);
+ //void mousePressEvent(QGraphicsSceneMouseEvent * event);
 
 };
 

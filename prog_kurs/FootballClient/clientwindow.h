@@ -10,6 +10,7 @@
 #include <QPainter>
 #include "fields.h"
 #include "rectang.h"
+#include <QThread>
 QT_BEGIN_NAMESPACE
 namespace Ui { class ClientWindow; }
 QT_END_NAMESPACE
@@ -23,7 +24,7 @@ public:
     ~ClientWindow();
     QTcpSocket* socket;
     QByteArray Data;
-    void paintEvent(QPaintEvent *event);
+    //void paintEvent(QPaintEvent *event);
 public slots:
     void sockReady();
     void sockDisc();

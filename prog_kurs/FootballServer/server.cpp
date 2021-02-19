@@ -5,7 +5,7 @@ FtblServer::~FtblServer(){}
 
 void FtblServer::startServer()
 {
-    if (this->listen(QHostAddress::Any,3333))
+    if (this->listen(QHostAddress::Any,3334 ))
     {
         qDebug()<<"Listening";
     }
@@ -18,17 +18,27 @@ void FtblServer::startServer()
 
 void FtblServer::incomingConnection(qintptr socketDescriptor)
 {
-    //написать комменты что здесь происходит
+
+
     socket = new QTcpSocket(this);
     socket -> setSocketDescriptor(socketDescriptor);
     connect (socket,SIGNAL(readyRead()),this,SLOT(sockReady()));
     connect (socket,SIGNAL(disconnected()),this,SLOT(sockDisc()));
     qDebug()<<socketDescriptor<<"Connected";
     QDataStream stream(socket);
-    Data="Peredacha";
-    stream<<Data;
-    qDebug()<<"Status";
+//    int ii = 42;
+//    QString s = QString::number(ii);
+    socket->write("Connect");
+//    Data="sknonn";
 
+//    stream<<Data;
+
+//    qDebug()<<Data;
+
+    socket->waitForReadyRead(1000);
+    QByteArray Data_2 = socket->readAll();
+
+     qDebug()<<Data_2;
 }
 
 

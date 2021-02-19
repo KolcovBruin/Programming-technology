@@ -12,11 +12,15 @@ ClientWindow::ClientWindow(QWidget *parent)
 
     ui->graphicsView->setScene(scene);
     scene->addItem(rectangle);   // Добавляем на сцену треугольник
-      rectangle->setPos(0,0);
+    rectangle->setPos(-50,-50);
+    scene->addLine(-250,0,250,0,QPen(Qt::black));   // Добавляем горизонтальную линию через центр
+    scene->addLine(0,-250,0,250,QPen(Qt::black));
 
     socket=new QTcpSocket(this);
     connect(socket,SIGNAL(readyRead()),this,SLOT(sockReady()));
     connect(socket,SIGNAL(disconnected),this,SLOT(sockDisc()));
+    socket->waitForReadyRead(500);
+    scene->clear();
 }
 
 ClientWindow::~ClientWindow()
@@ -27,7 +31,7 @@ ClientWindow::~ClientWindow()
 
 void ClientWindow::on_pushButton_clicked()
 {
-    socket->connectToHost("127.0.0.1",3333);
+ socket->connectToHost("127.0.0.1",3334);
 }
 void ClientWindow::sockDisc()
 {
@@ -38,27 +42,30 @@ void ClientWindow::sockReady()
 if (socket->waitForConnected(500))
     {
       socket->waitForReadyRead(500);
-      QByteArray b = socket->readAll();
-      QDataStream stream(&b, QIODevice::ReadOnly);
+      QByteArray Data = socket->readAll();
+//      QDataStream stream(&Data, QIODevice::ReadOnly);
 
 
-      stream >>Data;
+//      stream >>Data;
        qDebug()<<Data;
+       //socket->waitForReadyRead(500);
+       socket->write("Connectedsbdfjbvjnajdnvkbajbvjbaojdbvjbojdbvjbwdnkndjfbnjnondfjvl;qms,c");
+
     }
 }
 
-void ClientWindow::paintEvent(QPaintEvent *event)
-{
-    Q_UNUSED(event);
-    QPainter painter(this); // Создаём объект отрисовщика
-    // Устанавливаем кисть абриса
-  //  painter.setPen(QPen(Qt::white, 1, Qt::SolidLine, Qt::FlatCap));
+//void ClientWindow::paintEvent(QPaintEvent *event)
+//{
+//    Q_UNUSED(event);
+//    QPainter painter(this); // Создаём объект отрисовщика
+//    // Устанавливаем кисть абриса
+//  //  painter.setPen(QPen(Qt::white, 1, Qt::SolidLine, Qt::FlatCap));
 
 
 
-        painter.setBrush(QBrush(Qt::white, Qt::SolidPattern));
-          painter.drawLine(0, 0, 200, 200);
-    }
+//        painter.setBrush(QBrush(Qt::white, Qt::SolidPattern));
+//          painter.drawLine(0, 0, 200, 200);
+//    }
 
 
 
