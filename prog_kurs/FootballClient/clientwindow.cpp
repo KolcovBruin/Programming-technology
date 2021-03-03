@@ -19,8 +19,8 @@ ClientWindow::ClientWindow(QWidget *parent)
     socket=new QTcpSocket(this);
     connect(socket,SIGNAL(readyRead()),this,SLOT(sockReady()));
     connect(socket,SIGNAL(disconnected),this,SLOT(sockDisc()));
-    socket->waitForReadyRead(500);
-    scene->clear();
+
+
 }
 
 ClientWindow::~ClientWindow()
@@ -49,7 +49,11 @@ if (socket->waitForConnected(500))
 //      stream >>Data;
        qDebug()<<Data;
        //socket->waitForReadyRead(500);
-       socket->write("Connectedsbdfjbvjnajdnvkbajbvjbaojdbvjbojdbvjbwdnkndjfbnjnondfjvl;qms,c");
+       int a=10;
+
+       QString s=QString::number(a);
+        QByteArray Data_2=s.toUtf8();
+       socket->write(Data_2);
 
     }
 }
@@ -67,6 +71,15 @@ if (socket->waitForConnected(500))
 //          painter.drawLine(0, 0, 200, 200);
 //    }
 
+void ClientWindow::upd()
+{
+     scene->clear();
+}
 
 
 
+void ClientWindow::on_pushButton_3_clicked()
+{
+     scene->clear();
+
+}

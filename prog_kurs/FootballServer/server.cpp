@@ -37,8 +37,9 @@ void FtblServer::incomingConnection(qintptr socketDescriptor)
 
     socket->waitForReadyRead(1000);
     QByteArray Data_2 = socket->readAll();
-
-     qDebug()<<Data_2;
+    QString Data_3=QString(Data_2);
+    int a=Data_3.toInt();
+     qDebug()<<a;
 }
 
 

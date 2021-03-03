@@ -11,6 +11,7 @@
 #include "fields.h"
 #include "rectang.h"
 #include <QThread>
+#include <unistd.h>
 QT_BEGIN_NAMESPACE
 namespace Ui { class ClientWindow; }
 QT_END_NAMESPACE
@@ -31,10 +32,13 @@ public slots:
 private:
     Fields *scene;
     Rectang *rectangle;
+    void upd();
 private slots:
     void on_pushButton_clicked();
 
 
+
+    void on_pushButton_3_clicked();
 
 private:
     Ui::ClientWindow *ui;
