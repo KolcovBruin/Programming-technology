@@ -6,7 +6,7 @@
 //
 
 #include "Function.hpp"
-
+#include <limits>
 
 input* input_my()
 {
@@ -56,12 +56,14 @@ input* input_new()
     
     input* str_in=new input[5];
     cout<<"ВВедите число"<<endl;
-    str_in[0].str_cmp= cin.get();
+   // str_in[0].str_cmp= cin.get();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    
     str_in[0].str_cmp= cin.get();
     str_in[1].str_cmp= cin.get();
     str_in[2].str_cmp= cin.get();
     str_in[3].str_cmp= cin.get();
-    str_in[4].str_cmp= cin.get();
+   // str_in[4].str_cmp= cin.get();
    
     return str_in;
 }
