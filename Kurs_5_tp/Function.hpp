@@ -11,15 +11,20 @@
 #include <vector>
 #include <fstream>
 #include <stdio.h>
+#include <string>
+
 using namespace std;
+//string std_file ="/Users/my/Documents/Курсовая/Kurs_tp/Kurs_tp/Inp_numbers";
 struct input
 {
     char str_cmp;
     short int flag=0;
 };
 
-char* input_my();
+//string warning="Warning # ";
+input* input_my();
 input* input_new();
-short int* cmp_pos(input* str_2, char* str_1 );
+short int* cmp_pos(input* str_2, input* str_1 );
+short int test(input* str);
 
 #endif /* Function__hpp */
