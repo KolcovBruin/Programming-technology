@@ -47,6 +47,7 @@ input* input_my()
     str[2].str_cmp= inOut.get();
     str[3].str_cmp= inOut.get();
     str[4].str_cmp= inOut.get();
+    inOut.close();
     return str;
 }
 
